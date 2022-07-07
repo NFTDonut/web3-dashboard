@@ -15,16 +15,16 @@ export default function Home() {
 
   
 
-  provider = new ethers.providers.JsonRpcProvider(process.env.ALCHEMY_API_URL);
+  // provider = new ethers.providers.JsonRpcProvider(process.env.ALCHEMY_API_URL);
   etherscanProvider = new ethers.providers.EtherscanProvider("homestead", process.env.ETHERSCAN_API);
 
-  const getValues = async () => {
-    gasPrice = await provider.getGasPrice();
-    gasPriceFormatted = utils.formatUnits(gasPrice, "gwei");
-    console.log(gasPriceFormatted);
-  }
+  // const getValues = async () => {
+  //   gasPrice = await provider.getGasPrice();
+  //   gasPriceFormatted = utils.formatUnits(gasPrice, "gwei");
+  //   console.log(gasPriceFormatted);
+  // }
 
-  getValues();
+  // getValues();
 
   return (
     <div>
