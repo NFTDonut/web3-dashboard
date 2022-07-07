@@ -8,24 +8,11 @@ import PriceCard from '../components/PriceCard'
 import BalanceCard from '../components/BalanceCard'
 
 
-export default function Home() {
 
-  const ALCHEMY_API_URL = process.env.ALCHEMY_API_URL;
-  const ETHERSCAN_API = process.env.ETHERSCAN_API;
+export default function Home({getServerSideProps}) {
 
+  getServerSideProps;
   
-
-  // provider = new ethers.providers.JsonRpcProvider(process.env.ALCHEMY_API_URL);
-  etherscanProvider = new ethers.providers.EtherscanProvider("homestead", process.env.ETHERSCAN_API);
-
-  // const getValues = async () => {
-  //   gasPrice = await provider.getGasPrice();
-  //   gasPriceFormatted = utils.formatUnits(gasPrice, "gwei");
-  //   console.log(gasPriceFormatted);
-  // }
-
-  // getValues();
-
   return (
     <div>
       <Head>
@@ -42,4 +29,33 @@ export default function Home() {
       </div>
     </div>
   )
+}
+
+
+export async function getServerSideProps() {
+
+  console.log(process.env.ALCHEMY_API);
+
+  const alchemy_api = process.env.ALCHEMY_API;
+  const etherscan_api = process.env.ETHERSCAN_API;
+
+  const provider = new ethers.providers.AlchemyProvider("homestead", alchemy_api);
+  const etherscanProvider = new ethers.providers.EtherscanProvider("homestead", etherscan_api);
+
+  console.log(provider);
+  console.log(etherscanProvider);
+  // const getValues = async () => {
+  //   gasPrice = await provider.getGasPrice();
+  //   gasPriceFormatted = utils.formatUnits(gasPrice, "gwei");
+  //   console.log(gasPriceFormatted);
+  // }
+
+  // getValues();
+
+  return {
+    props: {
+      hello: 'world'
+    }
+  }
+
 }
