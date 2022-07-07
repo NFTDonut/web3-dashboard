@@ -1,11 +1,41 @@
 .container {
+  display: inline-flex;
   margin-top: 60px;
-  display: flex;
   height: calc(100vh - 60px);
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 40px 60px 0px 60px;
+  width: 100%;
 
+  border: 2px solid red;
+
+}
+
+.leftContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 20px;
+  
+  height: 100%;
+  width: 48%;
+  min-width: 400px;
+  margin: auto;
+
+  border: 2px solid greenyellow;
+}
+
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 20px;
+
+  height: 100%;
+  width: 48%;
+  min-width: 400px;
+  margin: auto;
+
+  border: 2px solid paleturquoise;
 }
 
 .nav {
@@ -22,9 +52,9 @@
 
 .card {
   display: flex;
-  width: 48%;
+  width: 100%;
   min-width: 300px;
-  height: 40%;
+  height: 100%;
   margin: 10px auto;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.05);
@@ -62,10 +92,21 @@
   margin-top: auto;
 }
 
-@media only screen and (max-width: 812px) {
-  .card {
-    width: 300px;
-    height: 500px;
+@media only screen and (max-width: 940px) {
+
+  .container {
+    height: 100%;
+    display: block;
+  }
+
+  .leftContainer {
+    width: 100%;
+    height: calc(100vh - 80px);
+  }
+
+  .rightContainer {
+    width: 100%;
+    height: calc(100vh - 80px);
   }
 
   .cardTitle {

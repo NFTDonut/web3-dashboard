@@ -10,7 +10,7 @@ import BalanceCard from '../components/BalanceCard'
 
 
 
-export default function Home({gas}) {
+export default function Home({gas, eth}) {
 
   return (
     <div>
@@ -21,10 +21,13 @@ export default function Home({gas}) {
       </Head>
       <Navbar />
       <div className={styles.container}>
-        <PriceCard />
-        <GasCard gas={gas}/>
-        <BalanceCard />
-        <GasCard />
+        <div className={styles.leftContainer}>
+          <BalanceCard />
+        </div>
+        <div className={styles.rightContainer}>
+          <PriceCard eth={eth}/>
+          <GasCard gas={gas}/>
+        </div>
       </div>
     </div>
   )
@@ -41,16 +44,18 @@ export async function getServerSideProps() {
   const provider = new ethers.providers.AlchemyProvider("homestead", alchemy_api);
   const etherscanProvider = new ethers.providers.EtherscanProvider("homestead", etherscan_api);
 
-  console.log(provider);
-  console.log(etherscanProvider);
-
+  // get gas price
   let gasPrice = await provider.getGasPrice();
   let gasPriceFormatted = Number(utils.formatUnits(gasPrice, "gwei")).toFixed(2);
   console.log("GAS: " + gasPriceFormatted);
 
+  let ethPrice = await etherscanProvider.getEtherPrice();
+  console.log("ETH: " + ethPrice);
+
   return {
     props: {
       gas: gasPriceFormatted,
+      eth: ethPrice,
     }
   }
 
