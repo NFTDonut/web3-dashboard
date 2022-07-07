@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { ethers, utils } from 'ethers'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Navbar from '../components/Navbar'
@@ -9,10 +10,8 @@ import BalanceCard from '../components/BalanceCard'
 
 
 
-export default function Home({getServerSideProps}) {
+export default function Home() {
 
-  getServerSideProps;
-  
   return (
     <div>
       <Head>
@@ -44,13 +43,14 @@ export async function getServerSideProps() {
 
   console.log(provider);
   console.log(etherscanProvider);
-  // const getValues = async () => {
-  //   gasPrice = await provider.getGasPrice();
-  //   gasPriceFormatted = utils.formatUnits(gasPrice, "gwei");
-  //   console.log(gasPriceFormatted);
-  // }
 
-  // getValues();
+  const getValues = async () => {
+    let gasPrice = await provider.getGasPrice();
+    let gasPriceFormatted = Number(utils.formatUnits(gasPrice, "gwei")).toFixed(2);
+    console.log("GAS: " + gasPriceFormatted);
+  }
+
+  getValues();
 
   return {
     props: {

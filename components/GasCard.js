@@ -8,7 +8,7 @@ export default function GasCard() {
                 <h1>Gas Price (Gwei):</h1>
             </div>
             <div className={styles.cardContent}>
-                <h2>Hi</h2>
+                <h2>hi</h2>
             </div>
         </div>
     );
