@@ -10,12 +10,12 @@ import BalanceCard from '../components/BalanceCard'
 
 export default function Home() {
 
-  const ALCHEMY_API = process.env.ALCHEMY_API;
+  const ALCHEMY_API_URL = process.env.ALCHEMY_API_URL;
   const ETHERSCAN_API = process.env.ETHERSCAN_API;
 
   
 
-  provider = new ethers.providers.JsonRpcProvider("homestead", process.env.ALCHEMY_API);
+  provider = new ethers.providers.JsonRpcProvider(process.env.ALCHEMY_API_URL);
   etherscanProvider = new ethers.providers.EtherscanProvider("homestead", process.env.ETHERSCAN_API);
 
   const getValues = async () => {
