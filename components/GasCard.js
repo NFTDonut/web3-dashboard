@@ -1,6 +1,6 @@
 import styles from '../styles/Home.module.css'
 
-export default function GasCard() {
+export default function GasCard({gas}) {
 
     return(
         <div className={styles.card}>
@@ -8,7 +8,7 @@ export default function GasCard() {
                 <h1>Gas Price (Gwei):</h1>
             </div>
             <div className={styles.cardContent}>
-                <h2>hi</h2>
+                <h2>{gas}</h2>
             </div>
         </div>
     );

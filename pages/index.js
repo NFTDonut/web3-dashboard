@@ -10,7 +10,7 @@ import BalanceCard from '../components/BalanceCard'
 
 
 
-export default function Home() {
+export default function Home({gas}) {
 
   return (
     <div>
@@ -22,7 +22,7 @@ export default function Home() {
       <Navbar />
       <div className={styles.container}>
         <PriceCard />
-        <GasCard />
+        <GasCard gas={gas}/>
         <BalanceCard />
         <GasCard />
       </div>
@@ -44,17 +44,13 @@ export async function getServerSideProps() {
   console.log(provider);
   console.log(etherscanProvider);
 
-  const getValues = async () => {
-    let gasPrice = await provider.getGasPrice();
-    let gasPriceFormatted = Number(utils.formatUnits(gasPrice, "gwei")).toFixed(2);
-    console.log("GAS: " + gasPriceFormatted);
-  }
-
-  getValues();
+  let gasPrice = await provider.getGasPrice();
+  let gasPriceFormatted = Number(utils.formatUnits(gasPrice, "gwei")).toFixed(2);
+  console.log("GAS: " + gasPriceFormatted);
 
   return {
     props: {
-      hello: 'world'
+      gas: gasPriceFormatted,
     }
   }
 
