@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import React, {useState} from 'react'
 import { ethers, utils } from 'ethers'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
@@ -8,9 +9,21 @@ import GasCard from '../components/GasCard'
 import PriceCard from '../components/PriceCard'
 import BalanceCard from '../components/BalanceCard'
 
-
-
 export default function Home({gas, eth}) {
+
+  const [bal, setBal] = useState("");
+
+  async function getWalletData() {
+    const alchemy_api = process.env.ALCHEMY_API;
+  
+    const provider = new ethers.providers.AlchemyProvider("homestead", alchemy_api);
+    let balance = await provider.getBalance("ricmoo.eth");
+    let formattedBalance = Number(ethers.utils.formatEther(balance)).toFixed(2);
+    console.log(formattedBalance);
+
+    setBal(formattedBalance);
+
+  }
 
   return (
     <div>
@@ -22,7 +35,7 @@ export default function Home({gas, eth}) {
       <Navbar />
       <div className={styles.container}>
         <div className={styles.leftContainer}>
-          <BalanceCard />
+          <BalanceCard getWalletData={getWalletData} bal={bal}/>
         </div>
         <div className={styles.rightContainer}>
           <PriceCard eth={eth}/>
