@@ -12,13 +12,13 @@ export default function BalanceCard({getWalletData, bal, lastTx}) {
                     <input placeholder='Enter a Wallet Address'></input>
                     <button className={styles.submitButton} onClick={getWalletData}>Submit</button>
                 </div>
-                <div className={styles.results}>
+                <div className={styles.bal}>
                     <h3>Balance (ETH):</h3>
                     <h2>{bal}</h2>
                 </div>
-                <div className={styles.results}>
-                    <h3>Latest Transaction:</h3>
-                    <h2>{lastTx.hash}</h2>
+                <div className={styles.hash}>
+                    <h3>Latest Transaction Hash:</h3>
+                    <p>{lastTx.hash}</p>
                 </div>
             </div>
         </div>
