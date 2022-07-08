@@ -1,6 +1,6 @@
 import styles from '../styles/Home.module.css'
 
-export default function BalanceCard({getWalletData, bal}) {
+export default function BalanceCard({getWalletData, bal, lastTx}) {
 
     return(
         <div className={styles.card}>
@@ -18,7 +18,7 @@ export default function BalanceCard({getWalletData, bal}) {
                 </div>
                 <div className={styles.results}>
                     <h3>Latest Transaction:</h3>
-                    <h2>gs</h2>
+                    <h2>{lastTx.hash}</h2>
                 </div>
             </div>
         </div>
