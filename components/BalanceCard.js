@@ -1,6 +1,6 @@
 import styles from '../styles/Home.module.css'
 
-export default function BalanceCard({getWalletData, bal, lastTx}) {
+export default function BalanceCard({bal, lastTx, handleSubmit}) {
 
     return(
         <div className={styles.card}>
@@ -8,10 +8,10 @@ export default function BalanceCard({getWalletData, bal, lastTx}) {
                 <h1>Wallet Data:</h1>
             </div>
             <div className={styles.walletCardContent}>
-                <div className={styles.interaction}>
-                    <input placeholder='Enter a Wallet Address'></input>
-                    <button className={styles.submitButton} onClick={getWalletData}>Submit</button>
-                </div>
+                <form method="post" className={styles.interaction} onSubmit={handleSubmit}>
+                    <input id="address" name="address" type="text" placeholder='Enter a Wallet Address'></input>
+                    <button type="submit" className={styles.submitButton}>Submit</button>
+                </form>
                 <div className={styles.bal}>
                     <h3>Balance (ETH):</h3>
                     <h2>{bal}</h2>
