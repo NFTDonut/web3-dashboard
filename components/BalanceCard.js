@@ -12,8 +12,8 @@ export default function BalanceCard({bal, lastTx, handleSubmit}) {
                     <input id="address" name="address" type="text" placeholder='Enter a Wallet Address'></input>
                     <button type="submit" className={styles.submitButton}>Submit</button>
                 </form>
+                <h3>Balance (ETH):</h3>
                 <div className={styles.bal}>
-                    <h3>Balance (ETH):</h3>
                     <h2>{bal}</h2>
                 </div>
                 <div className={styles.hash}>

@@ -8,12 +8,13 @@ import Navbar from '../components/Navbar'
 import GasCard from '../components/GasCard'
 import PriceCard from '../components/PriceCard'
 import BalanceCard from '../components/BalanceCard'
+    
+import { Network, initializeAlchemy, getNftsForOwner } from "@alch/alchemy-sdk";
 
 export default function Home({gas, eth}) {
 
   const [bal, setBal] = useState("");
   const [lastTx, setTx] = useState("");
-  const [address, setAddress] = useState('');
 
   // Handles the submit event on form submit.
   const handleSubmit = async (event) => {
@@ -62,13 +63,34 @@ export default function Home({gas, eth}) {
     console.log(formattedBalance);
     setBal(formattedBalance);
 
+
+    // Setup: npm install @alch/alchemy-sdk
+    // Github: https://github.com/alchemyplatform/alchemy-sdk-js
+
+    // Optional Config object, but defaults to demo api-key and eth-mainnet.
+    const settings = {
+      apiKey: alchemy_api, // Replace with your Alchemy API Key.
+      network: Network.ETH_MAINNET, // Replace with your network.
+      maxRetries: 10,
+    };
+
+    const alchemy = initializeAlchemy(settings);
+
+    // Print total NFT count returned in the response:
+    const nftsForOwner = await getNftsForOwner(alchemy, result.data);
+    console.log(nftsForOwner);
+
+
     // gets transaction history from specified address
-    await etherscanProvider.getHistory(result.data).then((history) => {
-      history.forEach((tx) => {
-          console.log(tx);
-      })
-      setTx(history[history.length - 1])
-    });
+    // setTx("Getting latest transaction...");
+    // let history = await etherscanProvider.getHistory(result.data);
+    // console.log("HISTORY: " + history);
+    // await etherscanProvider.getHistory(result.data).then((history) => {
+    //   history.forEach((tx) => {
+    //       console.log(tx);
+    //   })
+    //   setTx(history[history.length - 1])
+    // });
   }
 
   // async function getWalletData() {
