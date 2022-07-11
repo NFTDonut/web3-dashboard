@@ -8,16 +8,48 @@ import Navbar from '../components/Navbar'
 import GasCard from '../components/GasCard'
 import PriceCard from '../components/PriceCard'
 import BalanceCard from '../components/BalanceCard'
-    
-import { Network, initializeAlchemy, getNftsForOwner } from "@alch/alchemy-sdk";
 
 export default function Home({gas, eth}) {
 
+  const [wallet, setWalletAddress] = useState("");
   const [bal, setBal] = useState("");
-  const [lastTx, setTx] = useState("");
+  const [NFTs, setNFTs] = useState([]);
+
+  
+
+  const fetchNFTs = async () => {
+  // Stop the form from submitting and refreshing the page.
+
+    let nfts;
+    console.log("Fetching nfts...");
+    if(wallet.length) {
+
+      var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+      
+      const baseURL = `https://eth-mainnet.alchemyapi.io/nft/v2/${process.env.ALCHEMY_API}/getNFTs/`;
+      const fetchURL = `${baseURL}?owner=${wallet}`;
+      
+      nfts = await fetch(fetchURL, requestOptions).then(data => data.json()); 
+    } else {
+      console.log(" no wallet.length");
+    }
+
+    if(nfts) {
+      console.log(nfts);
+      // setNFTs(nfts);
+    }
+  }
+
+
+
+
 
   // Handles the submit event on form submit.
   const handleSubmit = async (event) => {
+
     // Stop the form from submitting and refreshing the page.
     event.preventDefault()
 
@@ -53,73 +85,19 @@ export default function Home({gas, eth}) {
     // alert(`Is this your full name: ${result.data}`)
 
     const alchemy_api = process.env.ALCHEMY_API;
-    const etherscan_api = process.env.ETHERSCAN_API;
   
     const provider = new ethers.providers.AlchemyProvider("homestead", alchemy_api);
-    const etherscanProvider = new ethers.providers.EtherscanProvider("homestead", etherscan_api);
 
     let balance = await provider.getBalance(result.data);
     let formattedBalance = Number(ethers.utils.formatEther(balance)).toFixed(2);
     console.log(formattedBalance);
     setBal(formattedBalance);
 
-
-    // Setup: npm install @alch/alchemy-sdk
-    // Github: https://github.com/alchemyplatform/alchemy-sdk-js
-
-    // Optional Config object, but defaults to demo api-key and eth-mainnet.
-    const settings = {
-      apiKey: alchemy_api, // Replace with your Alchemy API Key.
-      network: Network.ETH_MAINNET, // Replace with your network.
-      maxRetries: 10,
-    };
-
-    const alchemy = initializeAlchemy(settings);
-
-    // Print total NFT count returned in the response:
-    const nftsForOwner = await getNftsForOwner(alchemy, result.data);
-    console.log(nftsForOwner);
-
-
-    // gets transaction history from specified address
-    // setTx("Getting latest transaction...");
-    // let history = await etherscanProvider.getHistory(result.data);
-    // console.log("HISTORY: " + history);
-    // await etherscanProvider.getHistory(result.data).then((history) => {
-    //   history.forEach((tx) => {
-    //       console.log(tx);
-    //   })
-    //   setTx(history[history.length - 1])
-    // });
   }
 
-  // async function getWalletData() {
-
-  //   // setAddress();
+  return (
     
 
-  //   const alchemy_api = process.env.ALCHEMY_API;
-  //   const etherscan_api = process.env.ETHERSCAN_API;
-  
-  //   const provider = new ethers.providers.AlchemyProvider("homestead", alchemy_api);
-  //   const etherscanProvider = new ethers.providers.EtherscanProvider("homestead", etherscan_api);
-
-  //   let balance = await provider.getBalance("ricmoo.eth");
-  //   let formattedBalance = Number(ethers.utils.formatEther(balance)).toFixed(2);
-  //   console.log(formattedBalance);
-  //   setBal(formattedBalance);
-
-  //   // gets transaction history from specified address
-  //   await etherscanProvider.getHistory("0x9C656eE8e6b2B6395c92D9f7FabeaCaC322E5e1a").then((history) => {
-  //     history.forEach((tx) => {
-  //         console.log(tx);
-  //     })
-  //     setTx(history[history.length - 1])
-  //   });
-  //   // console.log("HISTORY: " + history[history.length - 1]);
-  // }
-
-  return (
     <div>
       <Head>
         <title>Web3 Dashboard</title>
@@ -129,7 +107,7 @@ export default function Home({gas, eth}) {
       <Navbar />
       <div className={styles.container}>
         <div className={styles.leftContainer}>
-          <BalanceCard bal={bal} lastTx={lastTx} handleSubmit={handleSubmit}/>
+          <BalanceCard bal={bal} wallet={wallet} setWalletAddress={setWalletAddress} fetchNFTs={fetchNFTs} handleSubmit={handleSubmit}/>
         </div>
         <div className={styles.rightContainer}>
           <PriceCard eth={eth}/>
@@ -142,8 +120,6 @@ export default function Home({gas, eth}) {
 
 
 export async function getServerSideProps() {
-
-  console.log(process.env.ALCHEMY_API);
 
   const alchemy_api = process.env.ALCHEMY_API;
   const etherscan_api = process.env.ETHERSCAN_API;
