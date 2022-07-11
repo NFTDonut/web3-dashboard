@@ -9,6 +9,19 @@ body {
   
 }
 
+html::-webkit-scrollbar {
+  width: 2vw;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.13);
+  border-radius: 2vw;
+}
+
+html::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 h1 {
   font-size: 22px;
   margin: 0;

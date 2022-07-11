@@ -1,6 +1,6 @@
 import styles from '../styles/Home.module.css'
 
-export default function BalanceCard({bal, wallet, setWalletAddress, fetchNFTs, handleSubmit}) {
+export default function BalanceCard({NFTs, bal, wallet, setWalletAddress, fetchNFTs, handleSubmit}) {
 
     return(
         <div className={styles.card}>
@@ -24,9 +24,23 @@ export default function BalanceCard({bal, wallet, setWalletAddress, fetchNFTs, h
                 <div className={styles.bal}>
                     <h2>{bal}</h2>
                 </div>
-                <div className={styles.hash}>
-                    <h3>Latest Transaction Hash:</h3>
-                    <p></p>
+                <h3>NFTs Owned:</h3>
+                <div className={styles.nfts}>
+                    
+                    {
+                        NFTs.length && NFTs.map(nft => {
+                            if (nft.title) {
+                                return (
+                                    <div className={styles.nft}>
+                                        <img src={nft.media[0].gateway} className={styles.nftImg}></img>
+                                        <p>{nft.title}</p>
+                                    </div>
+                                )
+                            } else {
+                                console.log("No nft data available");
+                            }
+                        })
+                    }
                     {
                         // nftArray.length && nftArray.map(nft => {
                         //     <img src={nft.media[0].gateway} style={{ width: '100px'}}></img>

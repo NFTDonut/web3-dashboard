@@ -22,28 +22,23 @@ export default function Home({gas, eth}) {
 
     let nfts;
     console.log("Fetching nfts...");
-    if(wallet.length) {
+    const baseURL = `https://eth-mainnet.alchemyapi.io/nft/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API}/getNFTs/`;
 
-      var requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-      };
-      
-      const baseURL = `https://eth-mainnet.alchemyapi.io/nft/v2/${process.env.ALCHEMY_API}/getNFTs/`;
-      const fetchURL = `${baseURL}?owner=${wallet}`;
-      
-      nfts = await fetch(fetchURL, requestOptions).then(data => data.json()); 
-    } else {
-      console.log(" no wallet.length");
-    }
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+    
+    const fetchURL = `${baseURL}?owner=${wallet}`;
+    
+    nfts = await fetch(fetchURL, requestOptions).then(data => data.json()); 
 
     if(nfts) {
-      console.log(nfts);
-      // setNFTs(nfts);
+      console.log("nfts:", nfts);
+      setNFTs(nfts.ownedNfts);
     }
+
   }
-
-
 
 
 
@@ -107,7 +102,7 @@ export default function Home({gas, eth}) {
       <Navbar />
       <div className={styles.container}>
         <div className={styles.leftContainer}>
-          <BalanceCard bal={bal} wallet={wallet} setWalletAddress={setWalletAddress} fetchNFTs={fetchNFTs} handleSubmit={handleSubmit}/>
+          <BalanceCard NFTs={NFTs} bal={bal} wallet={wallet} setWalletAddress={setWalletAddress} fetchNFTs={fetchNFTs} handleSubmit={handleSubmit}/>
         </div>
         <div className={styles.rightContainer}>
           <PriceCard eth={eth}/>
