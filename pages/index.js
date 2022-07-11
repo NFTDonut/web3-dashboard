@@ -18,6 +18,9 @@ export default function Home({gas, eth}) {
   
 
   const fetchNFTs = async () => {
+
+    setNFTs([]);
+    
   // Stop the form from submitting and refreshing the page.
 
     let nfts;
