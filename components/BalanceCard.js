@@ -1,6 +1,6 @@
 import styles from '../styles/Home.module.css'
 
-export default function BalanceCard({contentType, NFTs, bal, wallet, setWalletAddress, fetchNFTs, handleSubmit}) {
+export default function BalanceCard({contentType, bal, wallet, setWalletAddress, fetchNFTs, handleSubmit}) {
 
     return(
         <div className={styles.card}>
@@ -12,14 +12,14 @@ export default function BalanceCard({contentType, NFTs, bal, wallet, setWalletAd
                     <input id="address" name="address" type="text" placeholder='Enter a Wallet Address'></input>
                     <button type="submit" className={styles.submitButton}>Submit</button>
                 </form> */}
-                <div className={styles.interaction}>
+                <form method="post" className={styles.interaction} onSubmit={handleSubmit}>
                     <input id="address" name="address" type="text" placeholder='Enter a Wallet Address' onChange={(e) => setWalletAddress(e.target.value)} value={wallet}></input>
                     <button className={styles.submitButton} onClick={
                         () => {
                             fetchNFTs();
                         }
                     }>Submit</button>
-                </div>
+                </form>
                 <h3>Balance (ETH):</h3>
                 <div className={styles.bal}>
                     <h2>{bal}</h2>

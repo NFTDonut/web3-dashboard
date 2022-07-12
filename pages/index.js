@@ -13,20 +13,11 @@ export default function Home({gas, eth}) {
 
   const [wallet, setWalletAddress] = useState("");
   const [bal, setBal] = useState("");
-  const [NFTs, setNFTs] = useState([]);
   const [contentType, setContentType] = useState([]);
   
 
   const fetchNFTs = async () => {
-    setNFTs([]);
     setContentType([]);
-
-    //map through NFTs, fetch content-type, build array
-    // NFTs.length && NFTs.map(nft => {
-    //     console.log(nft.media[0].gateway);
-    // })
-    
-  // Stop the form from submitting and refreshing the page.
 
     let nfts;
     console.log("Fetching nfts...");
@@ -43,7 +34,7 @@ export default function Home({gas, eth}) {
 
     if(nfts) {
       console.log("nfts:", nfts);
-      setNFTs(nfts.ownedNfts);
+      //setNFTs(nfts.ownedNfts);
 
 
       // map through NFTs, fetch content type, and define array
@@ -53,7 +44,6 @@ export default function Home({gas, eth}) {
           .then(response => {
             console.log(nft.media[0].gateway);
             console.log("TYE: " + response.headers.get('Content-Type'));
-            // setContentType(response.headers.get('Content-Type'));
             setContentType( arr => [...arr, [nft.media[0].gateway, response.headers.get('Content-Type')]]);
           });
         }
@@ -128,7 +118,7 @@ export default function Home({gas, eth}) {
       <Navbar />
       <div className={styles.container}>
         <div className={styles.leftContainer}>
-          <BalanceCard contentType={contentType} NFTs={NFTs} bal={bal} wallet={wallet} setWalletAddress={setWalletAddress} fetchNFTs={fetchNFTs} handleSubmit={handleSubmit}/>
+          <BalanceCard contentType={contentType} bal={bal} wallet={wallet} setWalletAddress={setWalletAddress} fetchNFTs={fetchNFTs} handleSubmit={handleSubmit}/>
         </div>
         <div className={styles.rightContainer}>
           <PriceCard eth={eth}/>
