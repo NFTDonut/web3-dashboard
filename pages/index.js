@@ -48,13 +48,19 @@ export default function Home({gas, eth}) {
 
       // map through NFTs, fetch content type, and define array
       nfts.ownedNfts.length && nfts.ownedNfts.map(nft => {
-        fetch(nft.media[0].gateway, { method: 'HEAD' })
-        .then(response => {
-          console.log(nft.media[0].gateway);
-          console.log("TYE: " + response.headers.get('Content-Type'));
-          // setContentType(response.headers.get('Content-Type'));
-          setContentType( arr => [...arr, [nft.media[0].gateway, response.headers.get('Content-Type')]]);
-        });
+        try {
+          fetch(nft.media[0].gateway, { method: 'HEAD' })
+          .then(response => {
+            console.log(nft.media[0].gateway);
+            console.log("TYE: " + response.headers.get('Content-Type'));
+            // setContentType(response.headers.get('Content-Type'));
+            setContentType( arr => [...arr, [nft.media[0].gateway, response.headers.get('Content-Type')]]);
+          });
+        }
+        catch {
+          console.log("Couldn't fetch NFT data");
+        }
+        
       })
 
 

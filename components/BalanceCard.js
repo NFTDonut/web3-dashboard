@@ -46,23 +46,26 @@ export default function BalanceCard({contentType, NFTs, bal, wallet, setWalletAd
                                 // });
                                
 
-                                if(nft[1] !== "video/mp4") {
+                                if (nft[1] === "image/gif"|| nft[1] === "image/jpeg"|| nft[1] === "image/png"|| nft[1] === "image/tiff" || nft[1] === "image/vnd.microsoft.icon"
+                                || nft[1] === "image/x-icon"|| nft[1] === "image/vnd.djvu"|| nft[1] === "image/svg+xml" || nft[1] === "image/webp") {
                                     return (
                                         <div className={styles.nft}>
                                             <img src={nft[0]} className={styles.nftImg}></img>
-                                            <p></p>
                                         </div>
                                     )
                                 }
-                                else {
+                                else if (nft[1] === "video/mp4"|| nft[1] === "video/mpeg"|| nft[1] === "video/quicktime"|| nft[1] === "video/x-ms-wmv"
+                                || nft[1] === "video/x-msvideo"|| nft[1] === "video/x-flv"|| nft[1] === "video/webm") {
                                     return (
                                         <div className={styles.nft}>
                                             <video className={styles.nftImg}>
                                                 <source src={nft[0]}></source>
                                             </video>
-                                            <p></p>
                                         </div>
                                     )
+                                }
+                                else {
+                                    console.log("Invalid Content-type",nft);
                                 }
                             }
                             else {
