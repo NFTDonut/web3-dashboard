@@ -14,7 +14,6 @@ export default function Home({gas, eth}) {
   const [wallet, setWalletAddress] = useState("");
   const [bal, setBal] = useState("");
   const [NFTs, setNFTs] = useState([]);
-
   
 
   const fetchNFTs = async () => {
