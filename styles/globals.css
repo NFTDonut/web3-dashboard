@@ -70,3 +70,9 @@ input:focus {
 * {
   box-sizing: border-box;
 }
+
+@media only screen and (max-width: 940px) {
+  h2 {
+    font-size: 18vw;
+  }
+}
