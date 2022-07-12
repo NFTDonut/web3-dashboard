@@ -32,14 +32,13 @@ export default function BalanceCard({NFTs, bal, wallet, setWalletAddress, fetchN
                 <div className={styles.nfts}>
                     {
                         NFTs.length && NFTs.map(nft => {
-                            
+
+                            fetch(nft.media[0].gateway, { method: 'HEAD' }).then(response => {
+                                console.log(response.headers.get('Content-type'));
+                                console.log(nft.media[0].gateway)
+                            })
+                                
                             if (nft.title) {
-
-                                // check content type
-                                getMediaType(nft.media[0].gateway).then(type => {
-                                    console.log(type);
-                                });
-
                                 if(nft.media[0].gateway) {
                                     return (
                                         <div className={styles.nft}>
@@ -58,9 +57,11 @@ export default function BalanceCard({NFTs, bal, wallet, setWalletAddress, fetchN
                                         </div>
                                     )
                                 }
-                            } else {
+                            }
+                            else {
                                 console.log("No nft data available");
                             }
+
                         })
                     }
                 </div>
