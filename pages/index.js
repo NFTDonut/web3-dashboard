@@ -14,11 +14,17 @@ export default function Home({gas, eth}) {
   const [wallet, setWalletAddress] = useState("");
   const [bal, setBal] = useState("");
   const [NFTs, setNFTs] = useState([]);
+  const [contentType, setContentType] = useState([]);
   
 
   const fetchNFTs = async () => {
-
     setNFTs([]);
+    setContentType([]);
+
+    //map through NFTs, fetch content-type, build array
+    // NFTs.length && NFTs.map(nft => {
+    //     console.log(nft.media[0].gateway);
+    // })
     
   // Stop the form from submitting and refreshing the page.
 
@@ -38,11 +44,23 @@ export default function Home({gas, eth}) {
     if(nfts) {
       console.log("nfts:", nfts);
       setNFTs(nfts.ownedNfts);
+
+
+      // map through NFTs, fetch content type, and define array
+      nfts.ownedNfts.length && nfts.ownedNfts.map(nft => {
+        fetch(nft.media[0].gateway, { method: 'HEAD' })
+        .then(response => {
+          console.log(nft.media[0].gateway);
+          console.log("TYE: " + response.headers.get('Content-Type'));
+          // setContentType(response.headers.get('Content-Type'));
+          setContentType( arr => [...arr, [nft.media[0].gateway, response.headers.get('Content-Type')]]);
+        });
+      })
+
+
     }
 
   }
-
-
 
   // Handles the submit event on form submit.
   const handleSubmit = async (event) => {
@@ -104,7 +122,7 @@ export default function Home({gas, eth}) {
       <Navbar />
       <div className={styles.container}>
         <div className={styles.leftContainer}>
-          <BalanceCard NFTs={NFTs} bal={bal} wallet={wallet} setWalletAddress={setWalletAddress} fetchNFTs={fetchNFTs} handleSubmit={handleSubmit}/>
+          <BalanceCard contentType={contentType} NFTs={NFTs} bal={bal} wallet={wallet} setWalletAddress={setWalletAddress} fetchNFTs={fetchNFTs} handleSubmit={handleSubmit}/>
         </div>
         <div className={styles.rightContainer}>
           <PriceCard eth={eth}/>

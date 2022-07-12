@@ -1,10 +1,6 @@
 import styles from '../styles/Home.module.css'
 
-export default function BalanceCard({NFTs, bal, wallet, setWalletAddress, fetchNFTs, handleSubmit}) {
-
-    async function getMediaType(media) {
-        return fetch(media, { method: 'HEAD' }).then(response => response.headers.get('Content-type'));
-    }
+export default function BalanceCard({contentType, NFTs, bal, wallet, setWalletAddress, fetchNFTs, handleSubmit}) {
 
     return(
         <div className={styles.card}>
@@ -31,19 +27,30 @@ export default function BalanceCard({NFTs, bal, wallet, setWalletAddress, fetchN
                 <h3>NFTs Owned:</h3>
                 <div className={styles.nfts}>
                     {
-                        NFTs.length && NFTs.map(nft => {
-
-                            fetch(nft.media[0].gateway, { method: 'HEAD' }).then(response => {
-                                console.log(response.headers.get('Content-type'));
-                                console.log(nft.media[0].gateway)
-                            })
+                        contentType.length && contentType.map(nft => {
+                        // NFTs.length && NFTs.map(nft => {
                                 
-                            if (nft.title) {
-                                if(nft.media[0].gateway) {
+                            if (contentType) {
+
+                                // fetch(nft.media[0].gateway, { method: 'HEAD' })
+                                // .then(response => {
+                                //     console.log(nft.media[0].gateway);
+                                //     console.log(response.headers.get('Content-type')); 
+                                //     if(response.headers.get('Content-type') === "video/mp4") {
+                                //         setIsVideo(true);
+                                //     } else {
+                                //         setIsVideo(false);
+                                //     }
+                                // console.log("isVideo: " + isVideo);
+
+                                // });
+                               
+
+                                if(nft[1] !== "video/mp4") {
                                     return (
                                         <div className={styles.nft}>
-                                            <img src={nft.media[0].gateway} className={styles.nftImg}></img>
-                                            <p>{nft.title}</p>
+                                            <img src={nft[0]} className={styles.nftImg}></img>
+                                            <p></p>
                                         </div>
                                     )
                                 }
@@ -51,9 +58,9 @@ export default function BalanceCard({NFTs, bal, wallet, setWalletAddress, fetchN
                                     return (
                                         <div className={styles.nft}>
                                             <video className={styles.nftImg}>
-                                                <source src={nft.media[0].gateway}></source>
+                                                <source src={nft[0]}></source>
                                             </video>
-                                            <p>{nft.title}</p>
+                                            <p></p>
                                         </div>
                                     )
                                 }
