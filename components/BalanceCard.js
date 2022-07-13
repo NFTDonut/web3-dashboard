@@ -1,6 +1,6 @@
 import styles from '../styles/Home.module.css'
 
-export default function BalanceCard({contentType, bal, wallet, setWalletAddress, fetchNFTs, handleSubmit}) {
+export default function BalanceCard({errorMsg, contentType, bal, wallet, setWalletAddress, fetchNFTs, handleSubmit}) {
 
     return(
         <div className={styles.card}>
@@ -8,12 +8,9 @@ export default function BalanceCard({contentType, bal, wallet, setWalletAddress,
                 <h1>Wallet Data:</h1>
             </div>
             <div className={styles.walletCardContent}>
-                {/* <form method="post" className={styles.interaction} onSubmit={handleSubmit}>
-                    <input id="address" name="address" type="text" placeholder='Enter a Wallet Address'></input>
-                    <button type="submit" className={styles.submitButton}>Submit</button>
-                </form> */}
                 <form method="post" className={styles.interaction} onSubmit={handleSubmit}>
                     <input id="address" name="address" type="text" placeholder='Enter a Wallet Address' onChange={(e) => setWalletAddress(e.target.value)} value={wallet}></input>
+                    <p id='addressError' className={styles.error}>{errorMsg}</p>
                     <button className={styles.submitButton} onClick={
                         () => {
                             fetchNFTs();
@@ -28,22 +25,8 @@ export default function BalanceCard({contentType, bal, wallet, setWalletAddress,
                 <div className={styles.nfts}>
                     {
                         contentType.length && contentType.map(nft => {
-                        // NFTs.length && NFTs.map(nft => {
                                 
                             if (contentType) {
-
-                                // fetch(nft.media[0].gateway, { method: 'HEAD' })
-                                // .then(response => {
-                                //     console.log(nft.media[0].gateway);
-                                //     console.log(response.headers.get('Content-type')); 
-                                //     if(response.headers.get('Content-type') === "video/mp4") {
-                                //         setIsVideo(true);
-                                //     } else {
-                                //         setIsVideo(false);
-                                //     }
-                                // console.log("isVideo: " + isVideo);
-
-                                // });
                                
 
                                 if (nft[1] === "image/gif"|| nft[1] === "image/jpeg"|| nft[1] === "image/png"|| nft[1] === "image/tiff" || nft[1] === "image/vnd.microsoft.icon"

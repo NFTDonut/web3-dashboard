@@ -48,6 +48,16 @@
   padding: 0px 20px;
 }
 
+.error {
+  color: red;
+  font-size: 14px;
+  height: 30px;
+  margin-top: 0;
+  padding: 0;
+  text-align: center;
+  vertical-align: top;
+}
+
 .card {
   display: flex;
   width: 100%;
@@ -196,7 +206,7 @@
 }
 
 .submitButton {
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   width: 200px;
   height: 50px;
   border-radius: 30px;
